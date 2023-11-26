@@ -89,12 +89,6 @@ export default function Page({ postId }: { postId: string }) {
               </Stack>
 
               <Stack direction={"row"} justify={"center"} spacing={6}>
-                {/* <Stack spacing={0} align={"center"}>
-                  <Text fontWeight={600}>Gender</Text>
-                  <Text fontSize={"sm"} color={"gray.500"}>
-                    {user.gender}
-                  </Text>
-                </Stack> */}
                 <Stack spacing={0} align={"center"}>
                   <Text fontWeight={600}>Status</Text>
                   <Text fontSize={"sm"} color={"gray.500"}>

@@ -14,12 +14,28 @@ import {
   Stack,
   Image,
 } from "@chakra-ui/react";
+import { set, push, ref } from "firebase/database";
+import { database } from "@/config/firebaseConfig";
 
 const index = () => {
-  const [email, setEmail] = useState("");
-  const [state, setState] = useState<"initial" | "submitting" | "success">(
-    "initial"
-  );
+  const [title, setTitle] = useState("");
+  const [subtitle, setSubtitle] = useState("");
+
+  const handleAddPost = () => {
+    try {
+      const usersRef = ref(database, "users");
+      const newDataRef = push(usersRef);
+      set(newDataRef, {
+        title: title,
+        subtitle: subtitle,
+      });
+      setSubtitle("");
+      setTitle("");
+      alert("data added successfully");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -28,16 +44,27 @@ const index = () => {
         <Flex p={8} flex={1} align={"center"} justify={"center"}>
           <Stack spacing={4} w={"full"} maxW={"md"}>
             <Heading fontSize={"2xl"}>Create New Users</Heading>
-            <FormControl id="email">
+            <FormControl>
               <FormLabel>SubTitle</FormLabel>
-              <Input type="text" />
+              <Input
+                type="text"
+                value={subtitle}
+                onChange={(e) => setSubtitle(e.target.value)}
+              />
             </FormControl>
-            <FormControl id="password">
+            <FormControl>
               <FormLabel>Title</FormLabel>
-              <Input type="text" />
+              <Input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
             </FormControl>
             <Stack spacing={6}>
-              <Button colorScheme={"blue"} variant={"solid"}>
+              <Button
+                colorScheme={"blue"}
+                variant={"solid"}
+                onClick={handleAddPost}>
                 Create
               </Button>
             </Stack>
